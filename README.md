@@ -1,6 +1,10 @@
 # Dictator
-Dictator is a small commandline program to easily use Whisper, the AI
-audio transcription model from OpenAI.
+Dictator is a commandline program that allows you to dictate to your computer
+and have the text transcription be displayed in the terminal, ready to be copy
+and pasted wherever you may need it.
+
+Under the hood Dictator use Whisper, the AI speech recognition model from
+OpenAI.
 
 
 
