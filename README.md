@@ -55,6 +55,7 @@ python dictator.py
 
 
 ## Roadmap
+* Create GUI wrapper with clipboard copy button
 * Check Ubuntu system dependencies in a fresh installation
 * Expose configuration options via commandline arguments
 * Testing on CPU only and / or GPUs with lower VRAM
