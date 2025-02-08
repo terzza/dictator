@@ -63,3 +63,7 @@ python dictator.py
 * Optionally keep a copy of all recordings (might not actually be useful ;-/)
 * Investigate PyAudio directly into Whisper without intermediary file
 * Find better solution to PyAudio stderr hack with sounddevice
+* Words per minute indicator (helpful to see how dictation might be faster that
+typing WPM)
+* Test sequence that can be run against the test wav file with all models and
+devices to give an indication of system speed
