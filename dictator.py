@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import _thread
+import threading
 import pyaudio
 import wave
 import whisper
@@ -27,9 +27,12 @@ class Dictator:
 
         self.py_audio = pyaudio.PyAudio()
         self.whisper_model = whisper.load_model(self.MODEL_NAME, device=self.DEVICE)
+        self.stop_recording_signal = threading.Event()
+        self.recording_is_finished = threading.Event()
 
-    def get_user_input(self, user_input_messages):
-        user_input_messages.append(input(self.RECORDING_PROMPT))
+    def get_user_input(self):
+        input(self.RECORDING_PROMPT)
+        self.stop_recording_signal.set()
 
     def open_stream(self):
         self.stream = self.py_audio.open(
@@ -44,21 +47,29 @@ class Dictator:
         self.stream.stop_stream()
         self.stream.close()
 
-    def start_recording(self):
+    def start_recording(self, stop_on_keyboard_input=True):
+        self.recording_is_finished.clear()
         self.open_stream()
         frames = []
 
-        user_input = []
-        _thread.start_new_thread(self.get_user_input, (user_input,))
+        if stop_on_keyboard_input:
+            thread = threading.Thread(target=self.get_user_input)
+            thread.start()
 
         while True:
             frames.append(self.stream.read(self.CHUNK_SIZE))
-            if user_input:
+            if self.stop_recording_signal.is_set():
                 break
             print(".", end="", flush=True)
 
+        self.stop_recording_signal.clear()
         self.close_stream()
         self.save_audio(frames)
+
+        self.recording_is_finished.set()
+
+    def stop_recording(self):
+        self.stop_recording_signal.set()
 
     def save_audio(self, frames):
         wav_output = wave.open(self.TEMP_WAV_FILENAME, 'wb')
