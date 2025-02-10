@@ -90,7 +90,7 @@ class Dictator:
             _, probs = self.whisper_model.detect_language(mel)
             print(f"Detected language: {max(probs, key=probs.get)}")
 
-    def start_recording_loop(self):
+    def start_cli(self):
         running = True
         while running:
             print(self.READY_PROMPT, end="", flush=True)
@@ -105,4 +105,4 @@ class Dictator:
 
 if __name__ == "__main__":
     dictator = Dictator()
-    dictator.start_recording_loop()
+    dictator.start_cli()
