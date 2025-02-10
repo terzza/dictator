@@ -1,7 +1,7 @@
 # Dictator
-Dictator is a commandline program that allows you to dictate to your computer
-and have the text transcription be displayed in the terminal, ready to be copy
-and pasted wherever you may need it.
+Dictator is a commandline program and GUI that allows you to dictate to your
+computer and have the text transcription be displayed in the terminal, ready to
+be copy and pasted wherever you may need it.
 
 Under the hood Dictator use Whisper, the AI speech recognition model from
 OpenAI.
@@ -48,19 +48,20 @@ cd dictator
 # Activate the virtual environment
 source env/bin/activate
 
-# Start the program
+# Either start the CLI program
 python dictator.py
+
+# Or start the GUI program
+python dictator_gui.py
 ```
 
 
 
 ## Roadmap
-* Create GUI wrapper with clipboard copy button
 * Check Ubuntu system dependencies in a fresh installation
 * Expose configuration options via commandline arguments
-* Testing on CPU only and / or GPUs with lower VRAM
 * Keep a log file of transcriptions
-* Optionally keep a copy of all recordings (might not actually be useful ;-/)
+* Optionally keep a copy of all recordings (might not actually be useful :-/)
 * Investigate PyAudio directly into Whisper without intermediary file
 * Find better solution to PyAudio stderr hack with sounddevice
 * Words per minute indicator (helpful to see how dictation might be faster that
