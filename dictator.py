@@ -20,13 +20,17 @@ class Dictator:
     def __init__(self, verbose_instructions=True):
         print("Initialising...") if verbose_instructions else ""
         self.MODEL_NAME = self.WHISPER_MODELS[1]
-        self.DEVICE = "cpu"
-        # self.DEVICE = "cuda"
+        self.DEVICE = "cuda" # "cuda" or "cpu"
         self.READY_PROMPT = "Ready to Record? [Y/n]" if verbose_instructions else ">"
         self.RECORDING_PROMPT = ">>> RECORDING " if verbose_instructions else ""
 
         self.py_audio = pyaudio.PyAudio()
-        self.whisper_model = whisper.load_model(self.MODEL_NAME, device=self.DEVICE)
+        try:
+            self.whisper_model = whisper.load_model(self.MODEL_NAME, device=self.DEVICE)
+        except:
+            print("Unable to use GPU, switching to CPU")
+            self.whisper_model = whisper.load_model(self.MODEL_NAME, device="cpu")
+
         self.stop_recording_signal = threading.Event()
         self.recording_is_finished = threading.Event()
 
