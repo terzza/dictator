@@ -51,7 +51,7 @@ class Dictator:
         self.stream.stop_stream()
         self.stream.close()
 
-    def start_recording(self, stop_on_keyboard_input=True):
+    def start_recording(self, stop_on_keyboard_input=False):
         self.recording_is_finished.clear()
         self.open_stream()
         frames = []
@@ -114,7 +114,7 @@ class Dictator:
             if user_input not in ["Y", "y", ""]:
                 break
 
-            self.start_recording()
+            self.start_recording(stop_on_keyboard_input=True)
             print(f"{self.LINE_SPACING}{self.transcribe().strip()}{self.LINE_SPACING}")
 
 
