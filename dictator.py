@@ -90,20 +90,22 @@ class Dictator:
         audio = whisper.load_audio(self.TEMP_WAV_FILENAME)
         audio = whisper.pad_or_trim(audio)
 
-        mel = whisper.log_mel_spectrogram(
+        self.mel = whisper.log_mel_spectrogram(
             audio,
             n_mels=self.whisper_model.dims.n_mels
         ).to(self.whisper_model.device)
 
         options = whisper.DecodingOptions()
-        result = whisper.decode(self.whisper_model, mel, options)
+        result = whisper.decode(self.whisper_model, self.mel, options)
 
         return result.text
 
-    def detect_language(self, mel):
-        if self.whisper_model:
-            _, probs = self.whisper_model.detect_language(mel)
-            print(f"Detected language: {max(probs, key=probs.get)}")
+    def detect_language(self):
+        if self.whisper_model and (self.mel is not None):
+            _, probs = self.whisper_model.detect_language(self.mel)
+            return max(probs, key=probs.get)
+        else:
+            return None
 
     def start_cli(self):
         running = True
