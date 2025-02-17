@@ -16,7 +16,7 @@ class DictatorGui(tk.Tk):
         self.dictator = Dictator()
         self.recording = False
 
-        self.text_box = tk.Text(self, height=30, width=150)
+        self.text_box = tk.Text(self, height=45, width=150)
         self.text_box.pack(fill=tk.X)
 
         self.log_box = tk.Text(self, height=5)
