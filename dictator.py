@@ -5,7 +5,8 @@ import pyaudio
 import wave
 import whisper
 import sounddevice # TODO importing this silences the verbose stderr from PyAudio. Would be good to find a better solution
-
+import numpy as np
+import struct
 
 class Dictator:
 
@@ -13,7 +14,7 @@ class Dictator:
     AUDIO_FORMAT = pyaudio.paInt16
     CHANNELS = 1
     FRAME_RATE = 44100
-    CHUNK_SIZE = FRAME_RATE // 4
+    CHUNK_SIZE = FRAME_RATE // 10
     TEMP_WAV_FILENAME = "temp_audio.wav"
     LINE_SPACING = "\n"
 
@@ -61,7 +62,10 @@ class Dictator:
             thread.start()
 
         while True:
-            frames.append(self.stream.read(self.CHUNK_SIZE))
+            frame = self.stream.read(self.CHUNK_SIZE)
+            self.display_levels(frame)
+            frames.append(frame)
+
             if self.stop_recording_signal.is_set():
                 break
             print(".", end="", flush=True)
@@ -71,6 +75,13 @@ class Dictator:
         self.save_audio(frames)
 
         self.recording_is_finished.set()
+
+    def display_levels(self, frame):
+        # TODO This works, but is blocking so may result in gaps in audio between chunks
+        waveform_data = struct.unpack(str(self.CHUNK_SIZE) + 'h', frame)
+        waveform_data = np.array(waveform_data)
+        average_level = waveform_data.mean()
+        print("|" * int(average_level / 2))
 
     def stop_recording(self):
         self.stop_recording_signal.set()
