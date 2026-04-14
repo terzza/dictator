@@ -58,6 +58,7 @@ python dictator_gui.py
 
 
 ## Roadmap
+* Dark Mode
 * Check Ubuntu system dependencies in a fresh installation
 * Expose configuration options via commandline arguments
 * Keep a log file of transcriptions
