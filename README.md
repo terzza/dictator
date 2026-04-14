@@ -30,6 +30,9 @@ python3.14 -m venv .venv
 # Activate the virtual environment
 source .venv/bin/activate
 
+# You may need to install these extra packages:
+sudo apt-get install python3.14-dev python3.14-tk portaudio19-dev
+
 # Upgrade pip
 pip install -U pip
 
