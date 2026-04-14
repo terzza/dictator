@@ -10,7 +10,7 @@ OpenAI.
 
 ## Requirements
 Dictator is tested with:
-* Python 3.12
+* Python 3.14
 * Ubuntu 22.04.5 LTS
 * Nvidia RTX 3060 12GB
 
@@ -25,10 +25,10 @@ git clone git@github.com:terzza/dictator.git
 cd dictator
 
 # Create a Python virtual environment (presuming you're using Python 3.12)
-python3.12 -m venv env
+python3.14 -m venv .venv
 
 # Activate the virtual environment
-source env/bin/activate
+source .venv/bin/activate
 
 # Upgrade pip
 pip install -U pip
